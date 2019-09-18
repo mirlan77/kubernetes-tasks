@@ -14,6 +14,6 @@ spec:
             args:
             - /bin/sh
             - -c
-            - name:
-            activeDedlineSeconds:10
+            - uname 
+          activeDedlineSeconds: 10
             restartPolicy: OnFailure
