@@ -16,4 +16,4 @@ spec:
             - -c
             - uname 
           activeDedlineSeconds: 10
-            restartPolicy: OnFailure
+          restartPolicy: OnFailure
