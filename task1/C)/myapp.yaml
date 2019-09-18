@@ -5,10 +5,10 @@ metadata:
 spec:
   containers:
     - name: nginx
-    - image: nginx
+      image: nginx
     - name: redis
-    - image: redis
+      image: redis
     - name: memcached
-    - image: memcashed
+      image: memcashed
     - name: consul
-    - image: concul
+      image: concul
