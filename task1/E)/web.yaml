@@ -5,9 +5,9 @@ metadata:
   namespace: web
 spec: 
   containers: 
-    - name: redis
-      image: redis
-      ports:
-      - containerPort: 9090
-        name: redis
-        protocol: TCP
+  - image: redis
+    name: redis
+    ports:
+    - containerPort: 9090
+      name: redis
+      protocol: TCP
