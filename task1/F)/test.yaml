@@ -7,7 +7,7 @@ spec:
   containers:
   - image: busybox
     name: busybox
-    arg:
+    args:
     - /bin/sh
     - -c
     - echo "hello"
