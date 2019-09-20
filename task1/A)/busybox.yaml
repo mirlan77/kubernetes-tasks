@@ -14,6 +14,6 @@ spec:
             args:
             - /bin/sh
             - -c
-            - uname 
+            - uname: sleep 15
           activeDedlineSeconds: 10
           restartPolicy: OnFailure
