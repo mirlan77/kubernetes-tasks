@@ -4,8 +4,8 @@ metadata:
   name: secret-creds
 data:
   username: 
-  password: MySecurePass
-  
+  password: TXlTZWN1cmVQYXNz
+
 ---
 apiVersion: v1
 kind: Pod
