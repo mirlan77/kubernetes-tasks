@@ -1,4 +1,13 @@
 apiVersion: v1
+kind: Secret
+metadata:
+  name: secret-creds
+data:
+  username: 
+  password: MySecurePass
+  
+---
+apiVersion: v1
 kind: Pod
 metadata:
   name: redis-pod
@@ -14,3 +23,4 @@ spec:
   - name: secret
     secret:
       secretName: secret-creds
+      
