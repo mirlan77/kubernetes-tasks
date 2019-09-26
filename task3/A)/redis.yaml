@@ -3,7 +3,6 @@ kind: Secret
 metadata:
   name: secret-creds
 data:
-  username: 
   password: TXlTZWN1cmVQYXNz
 
 ---
@@ -20,7 +19,7 @@ spec:
       mountPath: /app-creds
       readOnly: true
   volumes:
-  - name: secret
+  - name: secret-creds
     secret:
       secretName: secret-creds
       
