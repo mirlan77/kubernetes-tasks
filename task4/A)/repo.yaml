@@ -1,21 +1,28 @@
- apiVersion: apps/v1
-kind: ReplicaSet
+apiVersion: extensions/v1beta1
+kind: Deployment
 metadata:
-  name: k8-service
+  annotations:
+    kubernetes.io/change-cause: "Update to 1.15.1"
   labels:
-    app: guestbook
-    tier: frontend
+    run: nginx-app-deployment
+  name: nginx-app-deployment
 spec:
-  replicas: 3
+  replicas: 5
   selector:
     matchLabels:
-      tier: frontend
+      run: nginx-app
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  revisionHistoryLimit: 10
   template:
     metadata:
       labels:
-        tier: frontend
+        run: nginx-app
     spec:
       containers:
-      - name: nginx
-        image: nginx
+      - image: nginx:1.14.0
+        name: nginx-app
 
