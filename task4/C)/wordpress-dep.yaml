@@ -1,71 +1,51 @@
 apiVersion: v1
 kind: Service
 metadata:
+  name: frontend
+spec:
+  selector:
+    tier: frontend
+    app: wordpress
+  ports:
+  - protocol: TCP
+    port: 80
+  type: LoadBalancer
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
   name: wordpress
   labels:
     app: wordpress
-    tier: frontend
 spec:
-  ports:
-    - port: 80
-      targetPort: 80
+  replicas: 1
   selector:
-    app: wordpress
-    tier: frontend
-  type: LoadBalancer
----
-
-apiVersion: extensions/v1beta1
-kind: Deployment
-metadata:
-  name: wordpress-deployment
-  labels:
-    app: wordpress
-    tier: frontend
-spec:
-  replicas: 3
+    matchLabels:
+      tier: frontend
+      app: wordpress
+  strategy:
+    type: Recreate
   template:
     metadata:
+      name: wordpress      
       labels:
-        app: wordpress
         tier: frontend
+        app: wordpress
     spec:
       containers:
-        - image: wordpress:latest
+      - name: wordpress
+        image: wordpress:4.8-apache
+        env:
+        - name: WORDPRESS_DB_HOST
+          value: wordpress-mysql
+        - name: WORDPRESS_DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysecret
+              key: password
+        ports:
+        - containerPort: 80
           name: wordpress
-          env:
-            - name: WORDPRESS_DB_HOST
-              value: mysql
-            # - name: WORDPRESS_DB_USER
-            #   value: admin
-            - name: WORDPRESS_DB_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: mysecret
-                  key: password
-          ports:
-            - containerPort: 80
-              name: wordpress
-          volumeMounts:
-            - name: wordpress-pvc
-              mountPath: /var/www/html
-      volumes:
-        - name: wordpress-pvc
-          persistentVolumeClaim:
-            claimName: wordpress-pvc
-
----
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: wordpress-pvc
-  labels:
-    name: wordpress-pvc
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 20Gi
 
