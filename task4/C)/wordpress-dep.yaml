@@ -49,3 +49,12 @@ spec:
         - containerPort: 80
           name: wordpress
 
+
+
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mysecret
+type: Opaque
+data:
+  password: YWRtaW4=  
